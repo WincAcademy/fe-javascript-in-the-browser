@@ -19,47 +19,49 @@ const flavours = ["chocolate", "vanilla", "strawberry", "lemon"];
 const getSearchField = () => document.querySelector("input.flavour-search");
 
 // Events
-const handleSearchClickEvent = event => {
-    updateFocusState(event.target);
+const handleSearchClickEvent = () => {
+    updateFocusState();
 };
-const handleTypeEvent = event => {
-    updateSearchState(event.target);
+const handleTypeEvent = () => {
+    updateSearchState();
 };
 
 // State
-const updateFocusState = inputField => {
+const updateFocusState = () => {
+    const inputField = getSearchField();
+
     // Check if the element has focus.
     const hasFocus = inputField === document.activeElement;
-    // ➡️ effects
+
     if (hasFocus) {
         setSearchFieldFocus();
     } else {
         unsetSearchFieldFocus();
     }
 };
-const updateSearchState = inputField => {
+const updateSearchState = () => {
+    const inputField = getSearchField();
+
     const currentValue = inputField.value;
     const matchFound = flavours.includes(currentValue);
 
     // Also do this with empty currentValue.
     showTypedInValue(currentValue);
 
-    // ➡️ effects
-    if (currentValue === "") {
-        hideResults();
-        setCharacterBeforeInput(" ");
-        return;
-    }
-    showResults();
-
     if (matchFound) {
+        showResults();
         setCharacterBeforeInput("✅");
         showFlavourFound();
         hideFlavourNotFound();
-    } else {
+    } else if (currentValue.length > 0) {
+        showResults();
         setCharacterBeforeInput("❌");
         hideFlavourFound();
         showFlavourNotFound();
+    } else {
+        // No match and no currentValue.
+        hideResults();
+        setCharacterBeforeInput(" ");
     }
 };
 
