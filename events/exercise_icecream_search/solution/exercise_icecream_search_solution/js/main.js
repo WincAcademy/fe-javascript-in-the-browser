@@ -32,9 +32,9 @@ const updateFocusState = inputField => {
     const hasFocus = inputField === document.activeElement;
     // ➡️ effects
     if (hasFocus) {
-        setSearchFieldFocus(inputField);
+        setSearchFieldFocus();
     } else {
-        unsetSearchFieldFocus(inputField);
+        unsetSearchFieldFocus();
     }
 };
 const updateSearchState = inputField => {
@@ -64,10 +64,12 @@ const updateSearchState = inputField => {
 };
 
 // Effects
-const setSearchFieldFocus = inputField => {
+const setSearchFieldFocus = () => {
+    const inputField = getSearchField();
     inputField.classList.add("has-focus");
 };
-const unsetSearchFieldFocus = inputField => {
+const unsetSearchFieldFocus = () => {
+    const inputField = getSearchField();
     inputField.classList.remove("has-focus");
 };
 
